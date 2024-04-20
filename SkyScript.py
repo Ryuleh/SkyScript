@@ -22,7 +22,7 @@ class WeatherApp:
         city = self.entry_city.get()
 
         if city:
-            api_key = "18f288af74819083651d36a1806616d1"
+            api_key = ""
             url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
             response = requests.get(url)
             data = response.json()
