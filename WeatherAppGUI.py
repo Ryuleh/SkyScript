@@ -16,7 +16,7 @@ class WeatherAppGUI:
         self.label_color = tk.Label(root, text="Choose Background Color:")
         self.label_color.pack()
 
-        self.color_options = ["blue", "red", "green", "yellow", "white"]
+        self.color_options = ["Blue", "Red", "Green", "Yellow", "White"]
         self.combobox_color = ttk.Combobox(root, values=self.color_options, state="readonly")
         self.combobox_color.pack()
 
@@ -30,15 +30,17 @@ class WeatherAppGUI:
         self.combobox_color.bind("<<ComboboxSelected>>", self.change_background_color)
 
     def change_background_color(self, event):
-        selected_color = self.combobox_color.get()
-        self.root.configure(background=selected_color)
+        selected_color = self.combobox_color.get().lower()
+        color_map = {"blue": "#007bff", "red": "#ff0000", "green": "#008000", "yellow": "#ffff00", "white": "#ffffff"}
+        if selected_color in color_map:
+            self.root.configure(background=color_map[selected_color])
 
     def get_weather(self):
         city = self.entry_city.get()
         selected_color = self.combobox_color.get()
 
-        if city and selected_color:
-            api_key = "18f288af74819083651d36a1806616d1"
+        if city:
+            api_key = ""
             url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
             response = requests.get(url)
             data = response.json()
@@ -49,7 +51,7 @@ class WeatherAppGUI:
             else:
                 self.label_weather_info.config(text="City not found")
         else:
-            self.label_weather_info.config(text="Please enter a city and select a color")
+            self.label_weather_info.config(text="Please enter a city")
 
 if __name__ == "__main__":
     root = tk.Tk()
