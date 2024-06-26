@@ -40,7 +40,7 @@ class WeatherAppGUI:
         selected_color = self.combobox_color.get()
 
         if city:
-            api_key = "6930016bdd68370e3f8dfdb2c6e212ee"
+            api_key = ""
             url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
             response = requests.get(url)
             data = response.json()
