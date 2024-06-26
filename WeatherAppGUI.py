@@ -40,18 +40,20 @@ class WeatherAppGUI:
         selected_color = self.combobox_color.get()
 
         if city:
-            api_key = ""
+            api_key = "6930016bdd68370e3f8dfdb2c6e212ee"
             url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
             response = requests.get(url)
             data = response.json()
 
-            if data["cod"] == 200:
-                weather_info = f"Weather in {city}: {data['weather'][0]['description']}, Temperature: {data['main']['temp']}°C"
-                self.label_weather_info.config(text=weather_info)
-            else:
-                self.label_weather_info.config(text="City not found")
+        if data["cod"] == 200:
+            kelvin_temp = data['main']['temp']
+            fahrenheit_temp = (kelvin_temp - 273.15) * 9/5 + 32
+            weather_info = f"Weather in {city}: {data['weather'][0]['description']}, Temperature: {fahrenheit_temp:.2f}°F"
+            self.label_weather_info.config(text=weather_info)
         else:
-            self.label_weather_info.config(text="Please enter a city")
+            self.label_weather_info.config(text="City not found")
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
